@@ -35,7 +35,8 @@
             <div class="modal-content">
                 <h1>Your most compatible companion is:</h1>
                 <div class="companion"></div>
-                <img class="companionImage" src="https://www.akc.org/wp-content/themes/akc/component-library/assets/img/welcome.jpg">
+                <img class="companionImage"
+                    src="https://www.akc.org/wp-content/themes/akc/component-library/assets/img/welcome.jpg">
 
 
                 <span class="close">&times;</span>
@@ -229,7 +230,7 @@
                 console.log(position);
                 console.log(data[position]);
                 $('.companion').html(data[position].name);
-                $('companionImage').attr("src", data[position].photo);
+                $('.companionImage').attr("src", data[position].photo);
                 $('.modal').fadeIn();
             })
 
