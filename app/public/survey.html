@@ -28,26 +28,18 @@
 <body>
     <div class="container">
 
-        <div id="myModal" class="modal">
+        <div id="myModal" class="modal"
+            style="width:50%; text-align: center; margin-left: 25%; margin-right:25%; margin-top: 5%">
 
             <!-- Modal content -->
             <div class="modal-content">
+                <h1>Your most compatible companion is:</h1>
+                <div class="companion"></div>
+                <img class="companionImage" src="https://www.akc.org/wp-content/themes/akc/component-library/assets/img/welcome.jpg">
+
+
                 <span class="close">&times;</span>
-                <h1>Login</h1><br>
-                <form>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            placeholder="Enter email">
-                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                            else.</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                    </div>
-                    <button type="submit" class="btn btn-primary submit-button">Submit</button>
-                </form>
+
             </div>
 
         </div>
@@ -236,6 +228,8 @@
                 var position = differenceArray.indexOf(closestMatch)
                 console.log(position);
                 console.log(data[position]);
+                $('.companion').html(data[position].name);
+                $('companionImage').attr("src", data[position].photo);
                 $('.modal').fadeIn();
             })
 
