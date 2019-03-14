@@ -29,17 +29,16 @@
     <div class="container">
 
         <div id="myModal" class="modal"
-            style="width:50%; text-align: center; margin-left: 25%; margin-right:25%; margin-top: 5%">
+            style="width:50%; text-align: center; margin-left: 25%; margin-right:25%; margin-top: 5%;">
 
             <!-- Modal content -->
-            <div class="modal-content">
+            <div class="modal-content" style="background-color:lightgray; padding:4%">
                 <h1>Your most compatible companion is:</h1>
-                <div class="companion"></div>
-                <img class="companionImage"
-                    src="" style="width:50%; height: auto; margin-left:25%; margin-right:25%">
+                <h2 class="companion"></h2>
+                <img class="companionImage" src="" style="width:50%; height: auto; margin-left:25%; margin-right:25%">
 
 
-                <span class="close">&times;</span>
+                <span class="close" style="padding:2%">EXIT</span>
 
             </div>
 
@@ -64,7 +63,7 @@
         <h3 style="font-weight: bold">Question 1</h3>
         <h4>I love a good party</h4>
         <select id="q1" class="selectpicker">
-            <option selected>Choose an answer</option>
+            <option value="default" selected="selected">Choose an answer</option>
             <option>1 (Strongly Disagree)</option>
             <option>2</option>
             <option>3</option>
@@ -75,7 +74,7 @@
         <h3 style="font-weight: bold">Question 2</h3>
         <h4>I like to keep a tight schedule</h4>
         <select id="q2" class="selectpicker">
-            <option selected>Choose an answer</option>
+            <option value="default" selected="selected">Choose an answer</option>
             <option>1 (Strongly Disagree)</option>
             <option>2</option>
             <option>3</option>
@@ -86,7 +85,7 @@
         <h3 style="font-weight: bold">Question 3</h3>
         <h4>I keep a very clean house</h4>
         <select id="q3" class="selectpicker">
-            <option selected>Choose an answer</option>
+            <option value="default" selected="selected">Choose an answer</option>
             <option>1 (Strongly Disagree)</option>
             <option>2</option>
             <option>3</option>
@@ -97,7 +96,7 @@
         <h3 style="font-weight: bold">Question 4</h3>
         <h4>I am a social butterfly</h4>
         <select id="q4" class="selectpicker">
-            <option selected>Choose an answer</option>
+                <option value="default" selected="selected">Choose an answer</option>
             <option>1 (Strongly Disagree)</option>
             <option>2</option>
             <option>3</option>
@@ -108,7 +107,7 @@
         <h3 style="font-weight: bold">Question 5</h3>
         <h4>I am more logical than emotional</h4>
         <select id="q5" class="selectpicker">
-            <option selected>Choose an answer</option>
+                <option value="default" selected="selected">Choose an answer</option>
             <option>1 (Strongly Disagree)</option>
             <option>2</option>
             <option>3</option>
@@ -119,7 +118,7 @@
         <h3 style="font-weight: bold">Question 6</h3>
         <h4>I love to travel to exotic places</h4>
         <select id="q6" class="selectpicker">
-            <option selected>Choose an answer</option>
+            <option value="default" selected="selected">Choose an answer</option>
             <option>1 (Strongly Disagree)</option>
             <option>2</option>
             <option>3</option>
@@ -130,7 +129,7 @@
         <h3 style="font-weight: bold">Question 7</h3>
         <h4>I am very sensitive</h4>
         <select id="q7" class="selectpicker">
-            <option selected>Choose an answer</option>
+            <option value="default" selected="selected">Choose an answer</option>
             <option>1 (Strongly Disagree)</option>
             <option>2</option>
             <option>3</option>
@@ -141,7 +140,7 @@
         <h3 style="font-weight: bold">Question 8</h3>
         <h4>I am very competitive</h4>
         <select id="q8" class="selectpicker">
-            <option selected>Choose an answer</option>
+            <option value="default" selected="selected">Choose an answer</option>
             <option>1 (Strongly Disagree)</option>
             <option>2</option>
             <option>3</option>
@@ -152,7 +151,7 @@
         <h3 style="font-weight: bold">Question 9</h3>
         <h4>I like a lot of alone time</h4>
         <select id="q9" class="selectpicker">
-            <option selected>Choose an answer</option>
+            <option value="default" selected="selected">Choose an answer</option>
             <option>1 (Strongly Disagree)</option>
             <option>2</option>
             <option>3</option>
@@ -163,7 +162,7 @@
         <h3 style="font-weight: bold">Question 10</h3>
         <h4>I have many friends</h4>
         <select id="q10" class="selectpicker">
-            <option selected>Choose an answer</option>
+            <option value="default" selected="selected">Choose an answer</option>
             <option>1 (Strongly Disagree)</option>
             <option>2</option>
             <option>3</option>
@@ -200,42 +199,48 @@
                 ]
             }
 
-            console.log(newFriend);
+            var allQuestionsAnswered = 0;
 
-            $.post("/api/friends", newFriend,
-                function (data) {
-                    if (data) {
-                        alert("Yay");
-                    }
-                    else {
-                        alert("Doh!")
-                    }
-                }
-            )
+            for (i = 0; i < 10; i++) {
+                allQuestionsAnswered += parseInt(newFriend.scores[i])
+            }
 
-            $.get("/api/friends", function (data) {
-                var differenceArray = [];
-                var numberOfFriends = data.length - 1;
-                for (i = 0; i < numberOfFriends; i++) {
-                    var totalDifference = 0;
-                    for (j = 0; j < 10; j++) {
-                        totalDifference += Math.abs(data[numberOfFriends].scores[j] - data[i].scores[j]);
-                    }
-                    console.log(totalDifference);
-                    differenceArray.push(totalDifference);
-                }
-                var closestMatch = Math.min(...differenceArray);
-                console.log(closestMatch);
-                var position = differenceArray.indexOf(closestMatch)
-                console.log(position);
-                console.log(data[position]);
-                $('.companion').html(data[position].name);
-                $('.companionImage').attr("src", data[position].photo);
-                $('.modal').fadeIn();
-            })
+            if (newFriend.name != "" && newFriend.photo != "" && isNaN(allQuestionsAnswered) === false) {
+                $.post("/api/friends", newFriend)
+                    .done(function (data) {
+                        console.log(data);
+                        $('.modal').fadeIn();
+                        $('.companion').html(data.name);
+                        $('.companionImage').attr("src", data.photo);
+                    })
+            } else {
+                alert("Please answer all questions");
+            };
+        });
 
-        })
     $('.close').on('click', function () {
+        $("#user-name").val("");
+        $("#user-image").val("");
+        $("#q1").val("default");
+        $("#q1").selectpicker("refresh");
+        $("#q2").val("default");
+        $("#q2").selectpicker("refresh");
+        $("#q3").val("default");
+        $("#q3").selectpicker("refresh");
+        $("#q4").val("default");
+        $("#q4").selectpicker("refresh");
+        $("#q5").val("default");
+        $("#q5").selectpicker("refresh");
+        $("#q6").val("default");
+        $("#q6").selectpicker("refresh");
+        $("#q7").val("default");
+        $("#q7").selectpicker("refresh");
+        $("#q8").val("default");
+        $("#q8").selectpicker("refresh");
+        $("#q9").val("default");
+        $("#q9").selectpicker("refresh");
+        $("#q10").val("default");
+        $("#q10").selectpicker("refresh");
         $('.modal').fadeOut();
     });
 
